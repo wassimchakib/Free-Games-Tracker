@@ -64,22 +64,30 @@ i:hover {
   display: flex;
   flex-wrap: wrap;
   gap: var(--fs-6);
+  justify-content: center;
 }
 
 .card {
-  flex: 1;
-  flex-basis: 200px;
+  flex-basis: 300px;
   display: flex;
   flex-direction: column;
   gap: var(--fs-2);
   padding: var(--fs-2);
-  
+  background-color: #eee;
+  border-radius: var(--fs-2);
+  box-shadow: 5px 10px 10px rgba(0,0,0,0.7);
 }
 
 .card__img {
   width: 100%;
   height: 200px;
   object-fit: cover;
+  cursor: pointer;
+  border-radius: var(--fs-2);
+}
+
+.card__img:hover {
+  transform: scale(1.1);
 }
 
 .card__desc {
@@ -92,5 +100,5 @@ i:hover {
   display: inline-block;
   width: 100%;
   text-align: end;
+  font-size: var(--fs-2);
 }
-
