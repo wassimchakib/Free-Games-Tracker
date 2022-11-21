@@ -36,6 +36,10 @@ body {
   text-decoration: none;
 }
 
+.active {
+  text-decoration: underline;
+}
+
 .f-container {
   position: fixed;
   bottom: 0;
