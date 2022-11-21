@@ -1,7 +1,38 @@
-body {
-  background-color: bisque;
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.hello {
-  color: red;
+html {
+  font-family: poppins, sans-serif;
+  font-size: 100%;
+}
+
+body {
+  height: 100vh;
+}
+
+.nav-items {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: space-around;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.f-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
 }
