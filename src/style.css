@@ -57,6 +57,43 @@ i:hover {
 }
 
 /*---------------------------*\
+        Header
+\*---------------------------*/
+
+.nav-items {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: space-around;
+}
+
+.nav-logo {
+  border-radius: 4rem;
+  padding: 1rem;
+  border: 1px solid black;
+  text-decoration: none;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.active {
+  text-decoration: underline;
+}
+
+.f-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+}
+
+/*---------------------------*\
         Main list
 \*---------------------------*/
 .cards {
