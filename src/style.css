@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -6,13 +7,14 @@
 }
 
 :root {
-  /* font sizes*/
+  /* font sizes */
   --fs-1: 1rem;
   --fs-2: 1.6rem;
   --fs-3: 2rem;
   --fs-4: 2.5rem;
   --fs-5: 3rem;
   --fs-6: 4rem;
+
   /* Colors */
   --bg-1: #e4e4e4;
 }
@@ -27,7 +29,7 @@ body {
 
 button {
   outline: none;
-  background:none;
+  background: none;
   border: 1px solid #000;
   font-size: var(--fs-2);
   display: block;
@@ -56,9 +58,9 @@ i:hover {
   color: red;
 }
 
-/*---------------------------*\
+/* ---------------------------*\
         Header
-\*---------------------------*/
+\*--------------------------- */
 
 .nav-items {
   margin-top: 3rem;
@@ -93,9 +95,9 @@ i:hover {
   height: 3rem;
 }
 
-/*---------------------------*\
+/* ---------------------------*\
         Main list
-\*---------------------------*/
+\*--------------------------- */
 .cards {
   font-size: var(--fs-4);
   display: flex;
@@ -112,7 +114,7 @@ i:hover {
   padding: var(--fs-2);
   background-color: #eee;
   border-radius: var(--fs-2);
-  box-shadow: 5px 10px 10px rgba(0,0,0,0.7);
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.7);
 }
 
 .card__img {

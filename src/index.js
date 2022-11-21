@@ -1,2 +1,2 @@
 import './style.css';
-import './modules/dom';
+import './modules/dom.js';

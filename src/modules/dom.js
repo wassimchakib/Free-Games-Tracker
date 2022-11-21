@@ -1,4 +1,4 @@
-import { fetchGames } from './gameAPI';
+import { fetchGames } from './gameAPI.js';
 
 // Function responsible for generating a single card
 
