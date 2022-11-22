@@ -1,5 +1,6 @@
 import { fetchGames } from './gameAPI.js';
 import { getLikes, sendLike } from './involvementAPI.js';
+import countListOfGames from './itemCounter.js';
 
 // Function responsible for generating a single card
 
@@ -50,6 +51,11 @@ const updateDOM = () => {
           });
         });
       });
+
+      // Count number of games
+      const navGame = document.querySelector('.nav-games');
+      const numberOfDisplayedGames = countListOfGames(cards);
+      navGame.textContent = `Games (${numberOfDisplayedGames})`;
     });
   });
 };
