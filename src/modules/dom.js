@@ -13,7 +13,7 @@ const generateCard = (
       <i class="fa-regular fa-heart card__btn"></i>
   </div>
   <span class="card__likes">${singleObj.likes} likes</span>
-  <button class="card__comments">Comments</button>
+  <button class="card__comments comments">Comments</button>
   <button class="card__reservations">Reservations</button>
 </div>`;
 
@@ -78,14 +78,15 @@ const updateDOM = () => {
       const numberOfDisplayedGames = countListOfGames(cards);
       navGame.textContent = `Games (${numberOfDisplayedGames})`;
 
-      cards.addEventListener('click', (e) => {
-        const popUp = document.querySelector('.pop-up-container');
-        cards.classList.toggle('display__none');
-        popUp.classList.toggle('display__none');
+      // Show popup
+      const comments = document.querySelectorAll('.comments');
+      comments.forEach((comment) => {
+        comment.addEventListener('click', (e) => {
+          const popUp = document.querySelector('.pop-up-container');
+          cards.classList.toggle('display__none');
+          popUp.classList.toggle('display__none');
 
-        let popUpMarkUp = '';
-        const commentClass = e.target.classList.contains('comments');
-        if (commentClass) {
+          let popUpMarkUp = '';
           const popUpChildren = e.target.parentElement.parentElement.children;
           const index = Array.from(popUpChildren).indexOf(
             e.target.parentElement,
@@ -99,7 +100,7 @@ const updateDOM = () => {
             cards.classList.toggle('display__none');
             popUp.classList.toggle('display__none');
           });
-        }
+        });
       });
     });
   });
