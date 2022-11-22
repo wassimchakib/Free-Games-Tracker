@@ -1,4 +1,5 @@
 import { fetchGames } from './gameAPI.js';
+import { getLikes } from './involvementAPI.js';
 
 // Function responsible for generating a single card
 
@@ -17,6 +18,7 @@ const generateCard = (
 
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelector('.cards');
+  const likes = getLikes().then((result) => result);
   const listOfCards = [];
   fetchGames().then((result) => {
     let games = result;
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: game.title,
       thumbnail: game.thumbnail,
       image: game.image,
+      likes: likes[index] ? likes[index].likes : 0,
     }));
 
     games.forEach((game) => {
