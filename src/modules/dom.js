@@ -1,6 +1,6 @@
 import { fetchGames } from './gameAPI.js';
 import {
-  getLikes, sendLike, getComments, sendComment,
+  getLikes, sendLike, getComments,
 } from './involvementAPI.js';
 import countListOfGames from './itemCounter.js';
 
@@ -112,8 +112,6 @@ const updateDOM = () => {
           getComments(index).then((comments) => {
             let liComments = '';
             if (comments.length) {
-              // console.log(comments);
-
               comments.map((comment) => {
                 const liMarkup = `
                 <li class="comment-item">
@@ -127,10 +125,8 @@ const updateDOM = () => {
               const commentList = document.querySelector('.comment-list');
               commentList.innerHTML = liComments;
             } else {
-              console.log('empty');
+              // console.log('empty');
             }
-
-            console.log(liComments);
           });
         });
       });

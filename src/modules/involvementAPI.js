@@ -5,7 +5,6 @@ const commentEndPoint = '/comments';
 const getLikes = async () => {
   const data = await fetch(BASE_URL + likeEndpoint);
   const result = await data.json();
-  // console.log(result);
   return result;
 };
 
@@ -21,13 +20,10 @@ const sendLike = async (id) => {
   return response;
 };
 
-
 const getComments = async (index) => {
   const URL = `${BASE_URL + commentEndPoint}?item_id=${index}`;
-  console.log(URL)
   const data = await fetch(URL);
   const result = await data.json();
-  // console.log(result);
   return result;
 };
 
