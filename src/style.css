@@ -58,6 +58,10 @@ i:hover {
   color: red;
 }
 
+i:active {
+  color: green;
+}
+
 /* ---------------------------*\
         Header
 \*--------------------------- */
@@ -140,6 +144,10 @@ i:hover {
   width: 100%;
   text-align: end;
   font-size: var(--fs-2);
+}
+
+.card__likes.success {
+  color: green;
 }
 
 .display__none {
