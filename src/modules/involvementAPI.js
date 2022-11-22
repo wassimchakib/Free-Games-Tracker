@@ -7,4 +7,16 @@ const getLikes = async () => {
   return result;
 };
 
-module.exports = { getLikes };
+const sendLike = async (id) => {
+  const data = await fetch(BASE_URL + likeEndpoint, {
+    method: 'POST',
+    body: JSON.stringify({ item_id: id }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+  const response = await data.text();
+  return response;
+};
+
+module.exports = { getLikes, sendLike };
