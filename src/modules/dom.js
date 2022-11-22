@@ -1,6 +1,6 @@
 import { fetchGames } from './gameAPI.js';
 import {
-  getLikes, sendLike, getComments,
+  getLikes, sendLike, getComments, sendComment,
 } from './involvementAPI.js';
 import countListOfGames from './itemCounter.js';
 
@@ -41,6 +41,16 @@ const generatePopUp = (
                 <ul class="comment-list">
                 </ul>
           </div>
+          <form>
+            <h3 class="add-comment-title">Add a comment</h3>
+              <label for="add-name">
+                <input type="text" name="add-name" id="add-name" placeholder="Your name">
+              </label>
+              <label for="add-insight">
+                <textarea type="text" name="add-insight" id="add-insight" placeholder="Your insights"></textarea>
+              </label>
+                <button type="submit" class="submit-comment">Comment</button>
+          </form>
 
       </div>`;
 
@@ -109,24 +119,55 @@ const updateDOM = () => {
             popUp.classList.toggle('display__none');
           });
 
-          getComments(index).then((comments) => {
+          const displayComment = (comments) => {
             let liComments = '';
+            comments.map((comment) => {
+              const liMarkup = `
+              <li class="comment-item">
+                  <p> ${comment.creation_date} ${comment.username}: ${comment.comment}</p>
+              </li>
+              `;
+              liComments += liMarkup;
+              return comment;
+            });
+            return liComments;
+          };
+
+          getComments(index).then((comments) => {
             if (comments.length) {
-              comments.map((comment) => {
-                const liMarkup = `
-                <li class="comment-item">
-                    <p> ${comment.creation_date} ${comment.username}: ${comment.comment}</p>
-                </li>
-                `;
-                liComments += liMarkup;
-                return liComments;
-              });
+              const liComments = displayComment(comments);
 
               const commentList = document.querySelector('.comment-list');
               commentList.innerHTML = liComments;
             } else {
               // console.log('empty');
             }
+
+            const addName = document.getElementById('add-name');
+            const addInsight = document.getElementById('add-insight');
+            const addComment = document.querySelector('form');
+            addComment.addEventListener('submit', (e) => {
+              e.preventDefault();
+
+              const name = addName.value;
+              const insight = addInsight.value;
+              if (name && insight) {
+                sendComment(index, name, insight).then((response) => {
+                  if (response === 'Created') {
+                    const commentList = document.querySelector('.comment-list');
+                    commentList.innerHTML = '';
+
+                    getComments(index).then((comments) => {
+                      const liComments = displayComment(comments);
+                      const commentList = document.querySelector('.comment-list');
+                      commentList.innerHTML = liComments;
+                    });
+                  }
+                });
+                addName.value = '';
+                addInsight.value = '';
+              }
+            });
           });
         });
       });
