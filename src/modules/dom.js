@@ -1,6 +1,7 @@
 import { fetchGames } from './gameAPI.js';
 import { getLikes, sendLike } from './involvementAPI.js';
 import countListOfGames from './itemCounter.js';
+import minimizeText from './utilities.js';
 
 // Function responsible for generating a single card
 
@@ -35,18 +36,29 @@ const generatePopUp = (
           </div>
       </div>`;
 
-const updateDOM = () => {
+const updateDOM = (previous, next) => {
   const cards = document.querySelector('.cards');
+  const rightArrow = document.querySelector('.right-arrow');
+  const leftArrow = document.querySelector('.left-arrow');
+  console.log('hello');
+  // Hide left Arrow if previous is equal to 0
+  if (previous === 0) {
+    leftArrow.classList.add('display__none');
+  } else {
+    leftArrow.classList.remove('display__none');
+  }
   const listOfCards = [];
   fetchGames().then((result) => {
-    let games = result;
+    const games = result;
     getLikes().then((likes) => {
-      // Limit to only first 6 games
-      games = games.slice(0, 6).map((game, index) => {
-        const like = likes.find((like) => like.item_id === index + 1);
+      // Limit to only 6 cards
+      const sliceOfGames = games.slice(previous, next).map((game, index) => {
+        const like = likes.find(
+          (like) => like.item_id === index + previous + 1,
+        );
         return {
           id: index + 1,
-          title: game.title,
+          title: minimizeText(game.title, 40),
           thumbnail: game.thumbnail,
           image: game.image,
           likes: like ? like.likes : 0,
@@ -56,7 +68,7 @@ const updateDOM = () => {
           worth: game.worth,
         };
       });
-      games.forEach((game) => {
+      sliceOfGames.forEach((game) => {
         listOfCards.push(generateCard(game));
       });
 
@@ -64,11 +76,12 @@ const updateDOM = () => {
       // Event Listener on Like btns
       document.querySelectorAll('.card__btn').forEach((card, index) => {
         card.addEventListener('click', () => {
-          sendLike(index + 1).then((result) => {
+          sendLike(index + previous + 1).then((result) => {
             if (result === 'Created') {
-              document.querySelectorAll('.card__likes')[index].classList.add('success');
+              document
+                .querySelectorAll('.card__likes')[index].classList.add('success');
             }
-            updateDOM();
+            updateDOM(previous, next);
           });
         });
       });
@@ -102,10 +115,27 @@ const updateDOM = () => {
           });
         });
       });
+
+      // Event Listener on Arrow buttons
+      rightArrow.addEventListener('click', () => {
+        console.log('hello from right arrow');
+        previous = next;
+        next += 6;
+        updateDOM(previous, next);
+      });
+      // Event Listener on Arrow buttons
+      leftArrow.addEventListener('click', () => {
+        next = previous;
+        previous -= 6;
+        updateDOM(previous, next);
+      });
     });
   });
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  updateDOM();
+  // 2 Variables to count the next pages
+  const previous = 0;
+  const next = 6;
+  updateDOM(previous, next);
 });

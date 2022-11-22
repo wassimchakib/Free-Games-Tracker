@@ -48,6 +48,7 @@ button:hover {
   width: 80%;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
 }
 
 i {
@@ -127,6 +128,7 @@ i:active {
   object-fit: cover;
   cursor: pointer;
   border-radius: var(--fs-2);
+  transition: all 0.5s;
 }
 
 .card__img:hover {
@@ -137,6 +139,7 @@ i:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: var(--fs-3);
 }
 
 .card__likes {
@@ -166,4 +169,18 @@ i:active {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+}
+
+.left-arrow {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  font-size: var(--fs-5);
+}
+
+.right-arrow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  font-size: var(--fs-5);
 }
