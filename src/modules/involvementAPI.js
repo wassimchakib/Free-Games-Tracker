@@ -5,6 +5,7 @@ const commentEndPoint = '/comments';
 const getLikes = async () => {
   const data = await fetch(BASE_URL + likeEndpoint);
   const result = await data.json();
+  // console.log(result);
   return result;
 };
 
@@ -20,10 +21,28 @@ const sendLike = async (id) => {
   return response;
 };
 
-const getComments = async () => {
-  const data = await fetch(BASE_URL + commentEndPoint);
+
+const getComments = async (index) => {
+  const URL = `${BASE_URL + commentEndPoint}?item_id=${index}`;
+  console.log(URL)
+  const data = await fetch(URL);
   const result = await data.json();
+  // console.log(result);
   return result;
 };
 
-module.exports = { getLikes, sendLike, getComments };
+const sendComment = async (id, name, comments) => {
+  const data = await fetch(BASE_URL + commentEndPoint, {
+    method: 'POST',
+    body: JSON.stringify({ item_id: id, username: name, comment: comments }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+  const response = await data.text();
+  return response;
+};
+
+module.exports = {
+  getLikes, sendLike, getComments, sendComment,
+};

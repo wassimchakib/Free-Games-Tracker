@@ -1,5 +1,7 @@
 import { fetchGames } from './gameAPI.js';
-import { getLikes, sendLike } from './involvementAPI.js';
+import {
+  getLikes, sendLike, getComments, sendComment,
+} from './involvementAPI.js';
 import countListOfGames from './itemCounter.js';
 
 // Function responsible for generating a single card
@@ -33,11 +35,19 @@ const generatePopUp = (
             <span>users: ${popUpObj.users}</span>
             <span>worth: ${popUpObj.worth}</span>
           </div>
+
+          <div class="comment-container">
+            <h3>Comments (<span>1</span>)</h3>
+                <ul class="comment-list">
+                </ul>
+          </div>
+
       </div>`;
 
 const updateDOM = () => {
   const cards = document.querySelector('.cards');
   const listOfCards = [];
+
   fetchGames().then((result) => {
     let games = result;
     getLikes().then((likes) => {
@@ -80,17 +90,15 @@ const updateDOM = () => {
 
       // Show popup
       const comments = document.querySelectorAll('.comments');
-      comments.forEach((comment) => {
-        comment.addEventListener('click', (e) => {
+
+      comments.forEach((comment, index) => {
+        comment.addEventListener('click', () => {
           const popUp = document.querySelector('.pop-up-container');
           cards.classList.toggle('display__none');
           popUp.classList.toggle('display__none');
 
           let popUpMarkUp = '';
-          const popUpChildren = e.target.parentElement.parentElement.children;
-          const index = Array.from(popUpChildren).indexOf(
-            e.target.parentElement,
-          );
+
           const popUpCard = games[index];
           popUpMarkUp = generatePopUp(popUpCard);
           popUp.innerHTML = popUpMarkUp;
@@ -99,6 +107,30 @@ const updateDOM = () => {
           faTimes.addEventListener('click', () => {
             cards.classList.toggle('display__none');
             popUp.classList.toggle('display__none');
+          });
+
+          getComments(index).then((comments) => {
+            let liComments = '';
+            if (comments.length) {
+              // console.log(comments);
+
+              comments.map((comment) => {
+                const liMarkup = `
+                <li class="comment-item">
+                    <p> ${comment.creation_date} ${comment.username}: ${comment.comment}</p>
+                </li>
+                `;
+                liComments += liMarkup;
+                return liComments;
+              });
+
+              const commentList = document.querySelector('.comment-list');
+              commentList.innerHTML = liComments;
+            } else {
+              console.log('empty');
+            }
+
+            console.log(liComments);
           });
         });
       });
