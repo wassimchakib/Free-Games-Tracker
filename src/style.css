@@ -171,3 +171,8 @@ i:active {
 .comment-item {
   list-style: none;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+}
