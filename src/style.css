@@ -184,3 +184,12 @@ i:active {
   top: 50%;
   font-size: var(--fs-5);
 }
+
+.comment-item {
+  list-style: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}

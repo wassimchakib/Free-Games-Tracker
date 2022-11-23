@@ -1,7 +1,12 @@
 import { fetchGames } from './gameAPI.js';
-import { getLikes, sendLike } from './involvementAPI.js';
-import countListOfGames from './itemCounter.js';
 import minimizeText from './utilities.js';
+import {
+  getLikes,
+  sendLike,
+  getComments,
+  sendComment,
+} from './involvementAPI.js';
+import countItems from './itemCounter.js';
 
 // Function responsible for generating a single card
 
@@ -34,6 +39,23 @@ const generatePopUp = (
             <span>users: ${popUpObj.users}</span>
             <span>worth: ${popUpObj.worth}</span>
           </div>
+
+          <div class="comment-container">
+            <h3>Comments (<span class="comment-counter"></span>)</h3>
+                <ul class="comment-list">
+                </ul>
+          </div>
+          <form>
+            <h3 class="add-comment-title">Add a comment</h3>
+              <label for="add-name">
+                <input type="text" name="add-name" id="add-name" placeholder="Your name">
+              </label>
+              <label for="add-insight">
+                <textarea type="text" name="add-insight" id="add-insight" placeholder="Your insights"></textarea>
+              </label>
+                <button type="submit" class="submit-comment">Comment</button>
+          </form>
+
       </div>`;
 
 const updateDOM = (previous, next) => {
@@ -48,6 +70,7 @@ const updateDOM = (previous, next) => {
     leftArrow.classList.remove('display__none');
   }
   const listOfCards = [];
+
   fetchGames().then((result) => {
     const games = result;
     getLikes().then((likes) => {
@@ -79,7 +102,8 @@ const updateDOM = (previous, next) => {
           sendLike(index + previous + 1).then((result) => {
             if (result === 'Created') {
               document
-                .querySelectorAll('.card__likes')[index].classList.add('success');
+                .querySelectorAll('.card__likes')
+                [index].classList.add('success');
             }
             updateDOM(previous, next);
           });
@@ -88,22 +112,20 @@ const updateDOM = (previous, next) => {
 
       // Count number of games
       const navGame = document.querySelector('.nav-games');
-      const numberOfDisplayedGames = countListOfGames(cards);
+      const numberOfDisplayedGames = countItems(cards);
       navGame.textContent = `Games (${numberOfDisplayedGames})`;
 
       // Show popup
       const comments = document.querySelectorAll('.comments');
-      comments.forEach((comment) => {
-        comment.addEventListener('click', (e) => {
+
+      comments.forEach((comment, index) => {
+        comment.addEventListener('click', () => {
           const popUp = document.querySelector('.pop-up-container');
           cards.classList.toggle('display__none');
           popUp.classList.toggle('display__none');
 
           let popUpMarkUp = '';
-          const popUpChildren = e.target.parentElement.parentElement.children;
-          const index = Array.from(popUpChildren).indexOf(
-            e.target.parentElement,
-          );
+
           const popUpCard = games[index];
           popUpMarkUp = generatePopUp(popUpCard);
           popUp.innerHTML = popUpMarkUp;
@@ -112,6 +134,64 @@ const updateDOM = (previous, next) => {
           faTimes.addEventListener('click', () => {
             cards.classList.toggle('display__none');
             popUp.classList.toggle('display__none');
+          });
+
+          const elementCounter = (commentList) => {
+            const elementCounter = document.querySelector('.comment-counter');
+            const numberOfDisplayedComments = countItems(commentList);
+            elementCounter.innerHTML = numberOfDisplayedComments;
+          };
+
+          const displayComment = (comments) => {
+            let liComments = '';
+            comments.map((comment) => {
+              const liMarkup = `
+              <li class="comment-item">
+                  <p> ${comment.creation_date} ${comment.username}: ${comment.comment}</p>
+              </li>
+              `;
+              liComments += liMarkup;
+              return comment;
+            });
+            return liComments;
+          };
+
+          getComments(index).then((comments) => {
+            if (comments.length) {
+              const liComments = displayComment(comments);
+              const commentList = document.querySelector('.comment-list');
+              commentList.innerHTML = liComments;
+              elementCounter(commentList);
+            } else {
+              // console.log('empty');
+            }
+
+            const addName = document.getElementById('add-name');
+            const addInsight = document.getElementById('add-insight');
+            const addComment = document.querySelector('form');
+            addComment.addEventListener('submit', (e) => {
+              e.preventDefault();
+
+              const name = addName.value;
+              const insight = addInsight.value;
+              if (name && insight) {
+                sendComment(index, name, insight).then((response) => {
+                  if (response === 'Created') {
+                    const commentList = document.querySelector('.comment-list');
+                    commentList.innerHTML = '';
+
+                    getComments(index).then((comments) => {
+                      const liComments = displayComment(comments);
+                      // const commentList = document.querySelector('.comment-list');
+                      commentList.innerHTML = liComments;
+                      elementCounter(commentList);
+                    });
+                  }
+                });
+                addName.value = '';
+                addInsight.value = '';
+              }
+            });
           });
         });
       });
