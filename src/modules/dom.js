@@ -1,187 +1,205 @@
-import { fetchGames } from './gameAPI.js';
-import {
-  getLikes, sendLike, getComments, sendComment,
-} from './involvementAPI.js';
+import GameAPI from './gameAPI.js';
+import InvolvementAPI from './involvementAPI.js';
+import generateCard from './components/card.js';
+import generatePopUp from './components/comment.js';
 import countItems from './itemCounter.js';
+import minimizeText, { checkInput } from './utilities.js';
 
-// Function responsible for generating a single card
+let previous = 0;
+let next = 6;
+let totalItems = 0;
 
-const generateCard = (
-  singleObj,
-) => `<div class="card" id="card_${singleObj.id}" value="${singleObj.id}">
-  <img src="${singleObj.thumbnail}" alt="" class="card__img">
-  <div class="card__desc">
-      <p>${singleObj.title}</p>
-      <i class="fa-regular fa-heart card__btn"></i>
-  </div>
-  <span class="card__likes">${singleObj.likes} likes</span>
-  <button class="card__comments comments">Comments</button>
-  <button class="card__reservations">Reservations</button>
-</div>`;
+const generateAPI = async (previous = 0, next = -1) => {
+  const result = await GameAPI.fetchGames();
+  totalItems = result.length;
+  const likes = await InvolvementAPI.getLikes();
+  const sliceOfGames = result.slice(previous, next).map((game, index) => {
+    const like = likes.find((like) => like.item_id === index + previous + 1);
+    return {
+      id: index + 1,
+      title: minimizeText(game.title, 40),
+      thumbnail: game.thumbnail,
+      image: game.image,
+      likes: like ? like.likes : 0,
+      platforms: game.platforms,
+      type: game.type,
+      users: game.users,
+      worth: game.worth,
+    };
+  });
+  return sliceOfGames;
+};
 
-const generatePopUp = (
-  popUpObj,
-) => `<div class="card" id="card_${popUpObj.id}" value="${popUpObj.id}">
-          <div class="holder">
-          <i class="fa fa-times"></i>
-          <img src="${popUpObj.image}" alt="" class="card__img">
-          <div>
-          <div class="card__desc">
-              <p>${popUpObj.title}</p>
-          </div>
-          <div class="pop-up-details">
-            <span>platforms: ${popUpObj.platforms}</span>
-            <span>type: ${popUpObj.type}</span>
-            <span>users: ${popUpObj.users}</span>
-            <span>worth: ${popUpObj.worth}</span>
-          </div>
+/**
+ * Returns an array of generated cards
+ */
 
-          <div class="comment-container">
-            <h3>Comments (<span class="comment-counter"></span>)</h3>
-                <ul class="comment-list">
-                </ul>
-          </div>
-          <form>
-            <h3 class="add-comment-title">Add a comment</h3>
-              <label for="add-name">
-                <input type="text" name="add-name" id="add-name" placeholder="Your name">
-              </label>
-              <label for="add-insight">
-                <textarea type="text" name="add-insight" id="add-insight" placeholder="Your insights"></textarea>
-              </label>
-                <button type="submit" class="submit-comment">Comment</button>
-          </form>
+const generateListOfGames = async (previous, next) => {
+  const generatedCards = [];
+  const sliceOfGames = await generateAPI(previous, next);
+  sliceOfGames.forEach((game) => {
+    generatedCards.push(generateCard(game));
+  });
+  return generatedCards;
+};
 
-      </div>`;
+/**
+ * Shows the homepage
+ */
 
-const updateDOM = () => {
+const renderHomePage = async (previous, next) => {
+  // Showing the list of cards
+
   const cards = document.querySelector('.cards');
-  const listOfCards = [];
+  const listOfCards = await generateListOfGames(previous, next);
+  cards.innerHTML = listOfCards.join('');
 
-  fetchGames().then((result) => {
-    let games = result;
-    getLikes().then((likes) => {
-      // Limit to only first 6 games
-      games = games.slice(0, 6).map((game, index) => {
-        const like = likes.find((like) => like.item_id === index + 1);
-        return {
-          id: index + 1,
-          title: game.title,
-          thumbnail: game.thumbnail,
-          image: game.image,
-          likes: like ? like.likes : 0,
-          platforms: game.platforms,
-          type: game.type,
-          users: game.users,
-          worth: game.worth,
-        };
+  // Showing the number of items in Navbar
+
+  const navGame = document.querySelector('.nav-games');
+  const numberOfDisplayedGames = countItems(cards);
+  navGame.textContent = `Games (${numberOfDisplayedGames})`;
+
+  // Event listener for like buttons
+
+  const cardBtns = document.querySelectorAll('.card__btn');
+  cardBtns.forEach((cardButton, index) => {
+    cardButton.addEventListener('click', async () => {
+      await InvolvementAPI.sendLike(index + previous + 1);
+      document.querySelectorAll('.card__likes')[index].classList.add('success');
+      renderHomePage(previous, next);
+    });
+  });
+};
+
+/**
+ * Generate a list of comments <li>
+ */
+const generateComments = (obj) => {
+  const arrayOfComments = obj.map(
+    (comment) => `
+    <li class="comment-item">
+      <p> ${comment.creation_date} ${comment.username}: ${comment.comment}</p>
+    </li>
+    `,
+  );
+  return arrayOfComments;
+};
+
+const renderListOfCommentsForEachCard = async (index) => {
+  const result = await InvolvementAPI.getComments(index);
+  if (result.length) {
+    const liComments = generateComments(result);
+    const commentList = document.querySelector('.comment-list');
+    commentList.innerHTML = liComments.join('');
+    const commentDiv = document.querySelector('.comment-counter');
+    const numberOfDisplayedComments = countItems(commentList);
+    commentDiv.innerHTML = numberOfDisplayedComments;
+  }
+};
+
+const showOrHideArrowButton = (leftArrow, rightArrow) => {
+  // Hide left Arrow if previous is equal to 0
+  if (previous === 0) {
+    leftArrow.classList.add('display__none');
+  } else {
+    leftArrow.classList.remove('display__none');
+  }
+  // Hide right Arrow if next is greater or equal to totalItems
+  if (next >= totalItems) {
+    rightArrow.classList.add('display__none');
+  } else {
+    rightArrow.classList.remove('display__none');
+  }
+};
+
+const renderComment = async (previous, next) => {
+  // Event listener for comment buttons
+
+  const comments = document.querySelectorAll('.comments');
+  comments.forEach((commentBtn, index) => {
+    commentBtn.addEventListener('click', async () => {
+      const popUpComment = document.querySelector('.pop-up-container');
+      const cards = document.querySelector('.cards');
+      const leftArrow = document.querySelector('.left-arrow');
+      const rightArrow = document.querySelector('.right-arrow');
+      // Hide the cards from UI and show the popup
+
+      cards.classList.toggle('display__none');
+      leftArrow.classList.add('display__none');
+      rightArrow.classList.add('display__none');
+      popUpComment.classList.toggle('display__none');
+
+      // Generate the pop up object and then populate it
+      const popUpObj = await generateAPI(previous, next);
+
+      popUpComment.innerHTML = generatePopUp(popUpObj[index]);
+
+      // Close Button event listener
+      const closeBtn = document.querySelector('.fa-times');
+      closeBtn.addEventListener('click', () => {
+        cards.classList.toggle('display__none');
+        popUpComment.classList.toggle('display__none');
+        showOrHideArrowButton(leftArrow, rightArrow);
       });
-      games.forEach((game) => {
-        listOfCards.push(generateCard(game));
-      });
 
-      cards.innerHTML = listOfCards.join('');
-      // Event Listener on Like btns
-      document.querySelectorAll('.card__btn').forEach((card, index) => {
-        card.addEventListener('click', () => {
-          sendLike(index + 1).then((result) => {
-            if (result === 'Created') {
-              document.querySelectorAll('.card__likes')[index].classList.add('success');
-            }
-            updateDOM();
-          });
-        });
-      });
+      // Show how many number of comments in the card
+      const commentDiv = document.querySelector('.comment-counter');
+      const numberOfDisplayedComments = countItems(commentDiv);
+      commentDiv.innerHTML = numberOfDisplayedComments;
 
-      // Count number of games
-      const navGame = document.querySelector('.nav-games');
-      const numberOfDisplayedGames = countItems(cards);
-      navGame.textContent = `Games (${numberOfDisplayedGames})`;
+      // render lists of comment
+      await renderListOfCommentsForEachCard(index + previous);
 
-      // Show popup
-      const comments = document.querySelectorAll('.comments');
-
-      comments.forEach((comment, index) => {
-        comment.addEventListener('click', () => {
-          const popUp = document.querySelector('.pop-up-container');
-          cards.classList.toggle('display__none');
-          popUp.classList.toggle('display__none');
-
-          let popUpMarkUp = '';
-
-          const popUpCard = games[index];
-          popUpMarkUp = generatePopUp(popUpCard);
-          popUp.innerHTML = popUpMarkUp;
-
-          const faTimes = document.querySelector('.fa-times');
-          faTimes.addEventListener('click', () => {
-            cards.classList.toggle('display__none');
-            popUp.classList.toggle('display__none');
-          });
-
-          const elementCounter = (commentList) => {
-            const elementCounter = document.querySelector('.comment-counter');
-            const numberOfDisplayedComments = countItems(commentList);
-            elementCounter.innerHTML = numberOfDisplayedComments;
-          };
-
-          const displayComment = (comments) => {
-            let liComments = '';
-            comments.map((comment) => {
-              const liMarkup = `
-              <li class="comment-item">
-                  <p> ${comment.creation_date} ${comment.username}: ${comment.comment}</p>
-              </li>
-              `;
-              liComments += liMarkup;
-              return comment;
-            });
-            return liComments;
-          };
-
-          getComments(index).then((comments) => {
-            if (comments.length) {
-              const liComments = displayComment(comments);
-              const commentList = document.querySelector('.comment-list');
-              commentList.innerHTML = liComments;
-              elementCounter(commentList);
-            } else {
-              // console.log('empty');
-            }
-
-            const addName = document.getElementById('add-name');
-            const addInsight = document.getElementById('add-insight');
-            const addComment = document.querySelector('form');
-            addComment.addEventListener('submit', (e) => {
-              e.preventDefault();
-
-              const name = addName.value;
-              const insight = addInsight.value;
-              if (name && insight) {
-                sendComment(index, name, insight).then((response) => {
-                  if (response === 'Created') {
-                    const commentList = document.querySelector('.comment-list');
-                    commentList.innerHTML = '';
-
-                    getComments(index).then((comments) => {
-                      const liComments = displayComment(comments);
-                      // const commentList = document.querySelector('.comment-list');
-                      commentList.innerHTML = liComments;
-                      elementCounter(commentList);
-                    });
-                  }
-                });
-                addName.value = '';
-                addInsight.value = '';
-              }
-            });
-          });
-        });
+      // Event listener for adding a new comment
+      const form = document.querySelector('form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = e.target[0].value;
+        const comment = e.target[1].value;
+        if (checkInput(name) && checkInput(comment)) {
+          const response = await InvolvementAPI.sendComment(
+            index + previous,
+            name,
+            comment,
+          );
+          if (response === 'Created') {
+            await renderListOfCommentsForEachCard(index + previous);
+          }
+          form.reset();
+        }
       });
     });
   });
 };
 
+const updateDOM = async (previous, next) => {
+  await renderHomePage(previous, next);
+  await renderComment(previous, next);
+  const rightArrow = document.querySelector('.right-arrow');
+  const leftArrow = document.querySelector('.left-arrow');
+  showOrHideArrowButton(leftArrow, rightArrow);
+};
+
+const btnsEventListener = () => {
+  const rightArrow = document.querySelector('.right-arrow');
+  const leftArrow = document.querySelector('.left-arrow');
+
+  // Event Listener on Arrow buttons
+  rightArrow.addEventListener('click', () => {
+    previous = next;
+    next += 6;
+    updateDOM(previous, next);
+  });
+  // Event Listener on Arrow buttons
+  leftArrow.addEventListener('click', () => {
+    next = previous;
+    previous -= 6;
+    updateDOM(previous, next);
+  });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-  updateDOM();
+  updateDOM(previous, next);
+  btnsEventListener();
 });

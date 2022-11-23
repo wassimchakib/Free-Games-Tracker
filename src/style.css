@@ -35,7 +35,6 @@ button {
   display: block;
   padding: var(--fs-2);
   font-family: 'Poppins', sans-serif;
-  width: 100%;
   cursor: pointer;
   border-radius: var(--fs-1);
 }
@@ -48,6 +47,7 @@ button:hover {
   width: 80%;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
 }
 
 i {
@@ -127,6 +127,7 @@ i:active {
   object-fit: cover;
   cursor: pointer;
   border-radius: var(--fs-2);
+  transition: all 0.5s;
 }
 
 .card__img:hover {
@@ -137,6 +138,7 @@ i:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: var(--fs-3);
 }
 
 .card__likes {
@@ -151,28 +153,127 @@ i:active {
 }
 
 .display__none {
-  display: none;
+  display: none !important;
 }
 
-.fa-times {
-  font-size: x-large;
+.left-arrow {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  font-size: var(--fs-5);
+}
+
+.right-arrow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  font-size: var(--fs-5);
+}
+
+/* ---------------------------*\
+        Comment Popup
+\*--------------------------- */
+
+.pop-up-container {
+  /* height: 100vh; */
+  padding: 2rem;
+  display: grid;
+}
+
+.card-popup {
   display: flex;
-  justify-content: end;
-  margin-bottom: 1rem;
+  flex-direction: column;
+}
+
+.card-popup__img {
+  width: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.card-popup__img:hover {
+  /* transform: scale(1.1); */
+}
+
+.card-popup__desc {
+  margin-top: 1rem;
+  font-size: var(--fs-4);
 }
 
 .pop-up-details {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
+  font-size: var(--fs-2);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  font-style: italic;
+  gap: 1.5rem;
+}
+
+.details-obj {
+  color: gray;
+}
+
+.comment-container {
+  margin-top: 1rem;
+  font-size: var(--fs-2);
+}
+
+.title-comments {
+  font-style: italic;
+  font-size: var(--fs-3);
+  margin-bottom: 1rem;
+}
+
+.comment-counter {
+  color: gray;
+}
+
+.comment-list li:nth-child(even) {
+  background-color: #eee;
+}
+
+/* ---------------------------*\
+        Form Popup
+\*--------------------------- */
+
+.form-popup {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--fs-2);
+  padding: var(--fs-2);
+
+  /* width: 40%; */
+}
+
+.add-comment-title {
+  font-size: var(--fs-3);
+}
+
+label {
+  width: 100%;
+}
+
+input,
+textarea {
+  width: 40%;
+}
+
+input[type='submit'] {
+  width: 20%;
+}
+
+.close-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fa-times {
+  font-size: var(--fs-6);
 }
 
 .comment-item {
   list-style: none;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
 }
