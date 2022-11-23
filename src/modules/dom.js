@@ -2,7 +2,7 @@ import { fetchGames } from './gameAPI.js';
 import {
   getLikes, sendLike, getComments, sendComment,
 } from './involvementAPI.js';
-import countListOfGames from './itemCounter.js';
+import countItems from './itemCounter.js';
 
 // Function responsible for generating a single card
 
@@ -37,7 +37,7 @@ const generatePopUp = (
           </div>
 
           <div class="comment-container">
-            <h3>Comments (<span>1</span>)</h3>
+            <h3>Comments (<span class="comment-counter"></span>)</h3>
                 <ul class="comment-list">
                 </ul>
           </div>
@@ -95,7 +95,7 @@ const updateDOM = () => {
 
       // Count number of games
       const navGame = document.querySelector('.nav-games');
-      const numberOfDisplayedGames = countListOfGames(cards);
+      const numberOfDisplayedGames = countItems(cards);
       navGame.textContent = `Games (${numberOfDisplayedGames})`;
 
       // Show popup
@@ -119,6 +119,12 @@ const updateDOM = () => {
             popUp.classList.toggle('display__none');
           });
 
+          const elementCounter = (commentList) => {
+            const elementCounter = document.querySelector('.comment-counter');
+            const numberOfDisplayedComments = countItems(commentList);
+            elementCounter.innerHTML = numberOfDisplayedComments;
+          };
+
           const displayComment = (comments) => {
             let liComments = '';
             comments.map((comment) => {
@@ -136,9 +142,9 @@ const updateDOM = () => {
           getComments(index).then((comments) => {
             if (comments.length) {
               const liComments = displayComment(comments);
-
               const commentList = document.querySelector('.comment-list');
               commentList.innerHTML = liComments;
+              elementCounter(commentList);
             } else {
               // console.log('empty');
             }
@@ -159,8 +165,9 @@ const updateDOM = () => {
 
                     getComments(index).then((comments) => {
                       const liComments = displayComment(comments);
-                      const commentList = document.querySelector('.comment-list');
+                      // const commentList = document.querySelector('.comment-list');
                       commentList.innerHTML = liComments;
+                      elementCounter(commentList);
                     });
                   }
                 });
