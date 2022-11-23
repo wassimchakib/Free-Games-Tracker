@@ -60,6 +60,10 @@ const renderHomePage = async (previous, next) => {
   const numberOfDisplayedGames = countItems(cards);
   navGame.textContent = `Games (${numberOfDisplayedGames})`;
 
+  // Render comments
+  // eslint-disable-next-line no-use-before-define
+  renderComment(previous, next);
+
   // Event listener for like buttons
 
   const cardBtns = document.querySelectorAll('.card__btn');
@@ -67,7 +71,7 @@ const renderHomePage = async (previous, next) => {
     cardButton.addEventListener('click', async () => {
       await InvolvementAPI.sendLike(index + previous + 1);
       document.querySelectorAll('.card__likes')[index].classList.add('success');
-      renderHomePage(previous, next);
+      await renderHomePage(previous, next);
     });
   });
 };
@@ -175,7 +179,6 @@ const renderComment = async (previous, next) => {
 
 const updateDOM = async (previous, next) => {
   await renderHomePage(previous, next);
-  await renderComment(previous, next);
   const rightArrow = document.querySelector('.right-arrow');
   const leftArrow = document.querySelector('.left-arrow');
   showOrHideArrowButton(leftArrow, rightArrow);
