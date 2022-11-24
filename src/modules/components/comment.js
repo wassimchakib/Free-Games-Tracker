@@ -24,15 +24,19 @@ export default (
       </ul>
   </div>
   <form class="form-popup">
-    <h3 class="add-comment-title">Add a comment</h3>
-    <label for="add-name">
-      <input type="text" name="name" id="add-name" placeholder="Your name">
-    </label>
-    <label for="add-insight">
-      <textarea type="text" name="insight" id="add-insight" placeholder="Your insights"></textarea>
-    </label>
-    <label for="">
-      <input type="submit" class="submit-comment" value="Comment"></input>
-    </label>
+    <h3 class="add-comment-title">Add a comment <i class="fa-solid fa-comment logo"></i></h3>
+    <div class="form__body">
+      <div class="form-item">
+        <input class="form__field" type="text" name="name" id="add-name" placeholder="Your name">
+        <label for="add-name">Name</label>
+      </div>
+      <div class="form-item">
+      <label for="add-insight">Comment</label>
+      <textarea class="form__field" type="text" name="insight" id="add-insight" placeholder="Your insights"></textarea>
+      </div>
+      <label for="">
+        <input type="submit" class="submit-comment btn" value="Comment"></input>
+      </label>
+    </div>
 </form>
 </div>`;

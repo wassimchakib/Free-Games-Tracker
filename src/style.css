@@ -17,6 +17,11 @@
 
   /* Colors */
   --bg-1: #e4e4e4;
+  --bg-2: #fafbfc;
+  --bg-3: #6f7e95;
+  --bg-4: #8d9db4;
+  --bg-5: #75bc7d;
+  --bg-btn: #93cff2;
 }
 
 html {
@@ -25,7 +30,8 @@ html {
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/bg.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('assets/bg.jpg');
   backdrop-filter: blur(5px);
 }
 
@@ -289,26 +295,108 @@ main {
   flex-direction: column;
   align-items: center;
   gap: var(--fs-2);
-  padding: var(--fs-2);
-  box-shadow: 5px 10px 10px #111;
+  box-shadow: 5px 10px 10px var(--bg-3);
   background-color: #fff;
 }
 
 .add-comment-title {
   font-size: var(--fs-3);
+  font-weight: 400;
+  background-color: var(--bg-3);
+  width: 100%;
+  color: var(--bg-2);
+  padding-left: var(--fs-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-comment-title .logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: var(--fs-2);
+  background-color: var(--bg-4);
+}
+
+.add-comment-title .logo:hover {
+  color: inherit;
+  cursor: text;
+}
+
+.form__body {
+  width: 100%;
+  padding: var(--fs-2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form__field {
+  padding: var(--fs-1) var(--fs-2);
+  border-radius: var(--fs-1);
+  border: 1px solid var(--bg-1);
+  font-family: Poppins, sans-serif;
+}
+
+.form-item {
+  position: relative;
+}
+
+.form-item label {
+  position: absolute;
+  cursor: text;
+  z-index: 2;
+  top: 13px;
+  left: var(--fs-2);
+  color: var(--bg-3);
+  font-size: 12px;
+  background-color: #fff;
+  transition: all .3s ease;
+  width: auto;
+}
+
+.form-item input {
+  outline: none;
+}
+
+
+.form-item input:focus ~ .form-item label,
+.form-item input:valid ~ .form-item label{
+  font-size: 11px;
+  top: -7px;
+  outline: none;
+  border: 2px solid var(--bg-5);
+}
+
+.form-item input:focus{
+  color: blue;
+  border: 2px solid blue;
+}
+
+.form__body input {
+  width: 60%;
+}
+
+.form__body textarea {
+  width: 100%;
+  min-height: 200px;
+}
+
+.form__body .submit-comment {
+  width: auto;
+  background-color: var(--bg-btn);
+  color: var(--bg-2);
+  border: none;
+  border-radius: 5px;
+}
+
+.form__body .submit-comment:hover {
+  background-color: var(--bg-5);
 }
 
 label {
   width: 100%;
-}
-
-input,
-textarea {
-  width: 40%;
-}
-
-input[type='submit'] {
-  width: 20%;
 }
 
 .close-btn {

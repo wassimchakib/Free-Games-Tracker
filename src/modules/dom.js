@@ -190,7 +190,7 @@ const btnsEventListener = () => {
   // Event Listener on Arrow buttons
   rightArrow.addEventListener('click', () => {
     previous = next;
-    next += 6;
+    next += 3;
     updateDOM(previous, next);
   });
   // Event Listener on Arrow buttons
