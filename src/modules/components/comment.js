@@ -13,7 +13,7 @@ export default (
     <h3>${popUpObj.title}</h3>
   </div>
   <div class="pop-up-details">
-    <span class="details">Platforms: <span class="details-obj">${popUpObj.platforms}</span></span>
+    <p><span class="details">Platforms:</span> ${popUpObj.platforms.map((platform) => `<span class="tag">${platform}</span>`).join('')}</p>
     <span class="details">Type: <span class="details-obj">${popUpObj.type}</span></span>
     <span class="details">Users: <span class="details-obj">${popUpObj.users}</span></span>
     <span class="details">Worth: <span class="details-obj">${popUpObj.worth}</span></span>

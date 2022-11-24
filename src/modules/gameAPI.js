@@ -12,6 +12,7 @@ export default class GameAPI {
   static fetchGames = async () => {
     const data = await fetch(this.BASE_URL, this.options);
     const response = await data.json();
+    console.log(response);
     return response;
   };
 }
