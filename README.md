@@ -26,37 +26,24 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 Webpack <a name="about-project"></a>
+# 📖 Free Games Giveaway <a name="about-project"></a>
 
-> Webpack is a boilerplate project used as a starting point for projects that requires webpack.
+> Free Games Giveaway is a website which you can find the latest links to giveaway game for multiple platforms : Windows, IOS, Android ...
 
 ## 🛠 Built With <a name="built-with"></a>
 - HTML
 - CSS
 - JS
 - Jest
+- Webpack
 ### Tech Stack <a name="tech-stack"></a>
 
 <details>
   <summary>Client</summary>
   <ul>
-    <li><a href="https://www.w3schools.com/js/">Vanilla JS</a></li>
+    <li><a href="https://www.w3schools.com/js/">JavaScript</a></li>
     <li><a href="https://www.w3schools.com/html/">HTML</a></li>
     <li><a href="https://www.w3schools.com/css/">CSS</a></li>
-  </ul>
-</details>
-
-<details>
-  <summary>Server</summary>
-  <ul>
-    <li><a href="https://expressjs.com/">Express.js</a></li>
-  </ul>
-</details>
-
-<details>
-<summary>Database</summary>
-  <ul>
-    <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
   </ul>
 </details>
 
@@ -66,9 +53,8 @@
 
 > Using the project will help you to : 
 
-- **[key_feature_1]**
-- **[key_feature_2]**
-- **[key_feature_3]**
+- **Access to the latest giveaways**
+- **See people's insights**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -76,7 +62,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://yourdeployedapplicationlink.com)
+- [Live Demo Link](https://wassimchakib.github.io/Free-Games-Tracker/dist/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -93,31 +79,36 @@ In order to run this project you need:
 - Node js installed on your computer
 - Npm Node package manager
 - Terminal
+- API key from [GamerPower](https://rapidapi.com/digiwalls/api/gamerpower)
 
 ### Setup
 
 Clone this repository by using the command line : 
-- `git clone https://github.com/wassimchakib/Webpack.git`
+- `git clone https://github.com/wassimchakib/Free-Games-Tracker.git`
 
 ### Install
 
 Install this project with:
 
+`npm install`
 
 ### Usage
 
 To run the project, execute the following command:
 
+ `npm start`
+
 ### Run tests
 
 To run tests, run the following command:
 
-```npm test ```
+`npm test `
 
 ### Deployment
 
-You can deploy this project using:
+You can deploy this project using: 
 
+`npm run deploy`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -131,17 +122,20 @@ You can deploy this project using:
 - Twitter: [@wassim_chakib](https://twitter.com/wassim_chakib)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/wassimchakib/)
 
+👤 **Mancoba Sihlongonyane**
+
+- GitHub: [@githubhandle](https://github.com/manq2010/)
+- Twitter: [@twitterhandle](https://twitter.com/mancoba_c/)
+- LinkedIn: [LinkedIn](https://linkedin.com/in/mancobasihlongonyane/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-> Describe 1 - 3 features you will add to the project.
 
-- [ ] **[new_feature_1]**
-- [ ] **[new_feature_2]**
-- [ ] **[new_feature_3]**
+- [ ] **Statistics ⏳⌛️**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -169,6 +163,8 @@ Give a ⭐️ if you like this project!
 
 - Hat tip to anyone whose code was used
 - Learning to code is learning to create and innovate
+- Thank you [Microverse](https://www.microverse.org/) for the [API](https://www.notion.so/Involvement-API-869e60b5ad104603aa6db59e08150270)
+- Thank you [GamerPower](https://www.gamerpower.com/) for the [API](https://rapidapi.com/digiwalls/api/gamerpower)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -179,7 +175,7 @@ Give a ⭐️ if you like this project!
 
 - **How to use the project**
 
-  - ```git clone https://github.com/wassimchakib/Webpack.git ```
+  - ```git clone https://github.com/wassimchakib/Free-Games-Tracker.git ```
 
 - **How to contribute to the project**
 

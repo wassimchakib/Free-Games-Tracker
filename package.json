@@ -6,19 +6,20 @@
   "scripts": {
     "test": "jest",
     "start": "webpack serve --open",
-    "build": "webpack"
+    "build": "webpack",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wassimchakib/Webpack.git"
+    "url": "git+https://github.com/wassimchakib/Free-Games-Tracker.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wassimchakib/Webpack/issues"
+    "url": "https://github.com/wassimchakib/Free-Games-Tracker/issues"
   },
-  "homepage": "https://github.com/wassimchakib/Webpack#readme",
+  "homepage": "https://github.com/wassimchakib/Free-Games-Tracker",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.7.1",
@@ -27,6 +28,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.26.0",
     "express": "^4.18.2",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
     "stylelint": "^13.13.1",
