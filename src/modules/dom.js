@@ -205,3 +205,5 @@ document.addEventListener('DOMContentLoaded', () => {
   updateDOM(previous, next);
   btnsEventListener();
 });
+
+export default generateComments;
