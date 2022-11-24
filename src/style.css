@@ -25,11 +25,12 @@ html {
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('assets/bg.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/bg.jpg');
   backdrop-filter: blur(5px);
 }
 
-button, .btn {
+button,
+.btn {
   outline: none;
   background: none;
   border: 1px solid #000;
@@ -41,7 +42,8 @@ button, .btn {
   border-radius: var(--fs-1);
 }
 
-button:hover, .btn:hover {
+button:hover,
+.btn:hover {
   background-color: var(--bg-1);
 }
 
@@ -186,7 +188,6 @@ main {
 .card__likes {
   display: inline-block;
   width: 100%;
-  text-align: end;
   font-size: var(--fs-2);
   text-align: center;
 }
@@ -195,7 +196,8 @@ main {
   color: green;
 }
 
-.card__giveaways, .card__comments {
+.card__giveaways,
+.card__comments {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -275,19 +277,6 @@ main {
 
 .comment-counter {
   color: gray;
-}
-
-.comment-list li:nth-child(odd) {
-  background-color: #ccc;
-}
-.comment-list li:hover:nth-child(odd) {
-  background-color: rgb(243, 127, 127);
-}
-.comment-list li:hover:nth-child(even) {
-  background-color: rgb(112, 232, 112);
-}
-.comment-list li:nth-child(even) {
-  background-color: #ddd;
 }
 
 /* ---------------------------*\
@@ -393,5 +382,5 @@ input[type='submit'] {
 }
 
 .tag:hover::after {
-   border-left-color: crimson; 
+  border-left-color: crimson;
 }

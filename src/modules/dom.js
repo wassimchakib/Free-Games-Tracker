@@ -133,7 +133,6 @@ const renderComment = async (previous, next) => {
       const popUpObj = await generateAPI(previous, next);
 
       popUpComment.innerHTML = generatePopUp(popUpObj[index]);
-      console.log(popUpObj[index].platforms);
 
       // Hide the cards from UI and show the popup
 
