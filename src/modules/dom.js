@@ -6,7 +6,7 @@ import countItems from './itemCounter.js';
 import minimizeText, { checkInput } from './utilities.js';
 
 let previous = 0;
-let next = 6;
+let next = 3;
 let totalItems = 0;
 
 const generateAPI = async (previous = 0, next = -1) => {
@@ -21,10 +21,11 @@ const generateAPI = async (previous = 0, next = -1) => {
       thumbnail: game.thumbnail,
       image: game.image,
       likes: like ? like.likes : 0,
-      platforms: game.platforms,
+      platforms: game.platforms.split(', '),
       type: game.type,
       users: game.users,
       worth: game.worth,
+      open_giveaway: game.open_giveaway,
     };
   });
   return sliceOfGames;
@@ -83,7 +84,9 @@ const generateComments = (obj) => {
   const arrayOfComments = obj.map(
     (comment) => `
     <li class="comment-item">
-      <p> ${comment.creation_date} ${comment.username}: ${comment.comment}</p>
+      <h4><i class="fa-solid fa-user"></i> ${comment.username}</h4>
+      <p class="timestamp">${comment.creation_date}</p>
+      <p>${comment.comment}</p>
     </li>
     `,
   );
@@ -124,27 +127,23 @@ const renderComment = async (previous, next) => {
   comments.forEach((commentBtn, index) => {
     commentBtn.addEventListener('click', async () => {
       const popUpComment = document.querySelector('.pop-up-container');
-      const cards = document.querySelector('.cards');
-      const leftArrow = document.querySelector('.left-arrow');
-      const rightArrow = document.querySelector('.right-arrow');
-      // Hide the cards from UI and show the popup
-
-      cards.classList.toggle('display__none');
-      leftArrow.classList.add('display__none');
-      rightArrow.classList.add('display__none');
-      popUpComment.classList.toggle('display__none');
+      const cards = document.querySelector('.container');
 
       // Generate the pop up object and then populate it
       const popUpObj = await generateAPI(previous, next);
 
       popUpComment.innerHTML = generatePopUp(popUpObj[index]);
 
+      // Hide the cards from UI and show the popup
+
+      cards.classList.toggle('display__none');
+      popUpComment.classList.toggle('display__none');
+
       // Close Button event listener
       const closeBtn = document.querySelector('.fa-times');
       closeBtn.addEventListener('click', () => {
         cards.classList.toggle('display__none');
         popUpComment.classList.toggle('display__none');
-        showOrHideArrowButton(leftArrow, rightArrow);
       });
 
       // Show how many number of comments in the card
@@ -197,7 +196,7 @@ const btnsEventListener = () => {
   // Event Listener on Arrow buttons
   leftArrow.addEventListener('click', () => {
     next = previous;
-    previous -= 6;
+    previous -= 3;
     updateDOM(previous, next);
   });
 };

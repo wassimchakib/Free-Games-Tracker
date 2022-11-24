@@ -8,9 +8,13 @@ export default (
   <img src="${cardObj.thumbnail}" alt="" class="card__img">
   <div class="card__desc">
       <p>${cardObj.title}</p>
-      <i class="fa-regular fa-heart card__btn"></i>
+      <div class="card__like">
+        <span class="card__likes">${cardObj.likes}</span>
+        <i class="fa-regular fa-heart card__btn"></i>
+      </div>
   </div>
-  <span class="card__likes">${cardObj.likes} likes</span>
-  <button class="card__comments comments">Comments</button>
-  <button class="card__reservations">Reservations</button>
+  
+  
+  <button class="card__comments comments"><span>Comments</span><i class="fa-solid fa-comments"></i></button>
+  <a href="${cardObj.open_giveaway}"class="card__giveaways btn" target="_blank"><span>Open Giveaway</span><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
 </div>`;
