@@ -17,6 +17,7 @@ const generateAPI = async (previous = 0, next = -1) => {
     const like = likes.find((like) => like.item_id === index + previous + 1);
     return {
       id: index + 1,
+      bigtitle: game.title,
       title: minimizeText(game.title, 40),
       thumbnail: game.thumbnail,
       image: game.image,
@@ -81,28 +82,39 @@ const renderHomePage = async (previous, next) => {
  * Generate a list of comments <li>
  */
 const generateComments = (obj) => {
-  const arrayOfComments = obj.map(
-    (comment) => `
-    <li class="comment-item">
-      <h4><i class="fa-solid fa-user"></i> ${comment.username}</h4>
-      <p class="timestamp">${comment.creation_date}</p>
-      <p>${comment.comment}</p>
-    </li>
-    `,
-  );
+  let arrayOfComments = [];
+  if (Array.isArray(obj)) {
+    arrayOfComments = obj.map(
+      (comment) => `
+      <li class="comment-item">
+        <i class="fas fa-user-circle fa-2xl"></i>
+        <div class="comment-user">
+          <h4> ${comment.username}</h4>
+          <p>${comment.comment}</p>
+        </div>
+        <p class="timestamp">${comment.creation_date}</p>
+      </li>
+      `,
+    );
+  } else {
+    arrayOfComments = [
+      `<li class="comment-item">
+    No comments found, Be the first one to comment
+  </li>`,
+    ];
+  }
+
   return arrayOfComments;
 };
 
 const renderListOfCommentsForEachCard = async (index) => {
   const result = await InvolvementAPI.getComments(index);
-  if (result.length) {
-    const liComments = generateComments(result);
-    const commentList = document.querySelector('.comment-list');
-    commentList.innerHTML = liComments.join('');
-    const commentDiv = document.querySelector('.comment-counter');
-    const numberOfDisplayedComments = countItems(commentList);
-    commentDiv.innerHTML = numberOfDisplayedComments;
-  }
+  const liComments = generateComments(result);
+  const commentList = document.querySelector('.comment-list');
+  commentList.innerHTML = liComments.join('');
+  const commentDiv = document.querySelector('.comment-counter');
+  const numberOfDisplayedComments = countItems(commentList);
+  commentDiv.innerHTML = numberOfDisplayedComments;
 };
 
 const showOrHideArrowButton = (leftArrow, rightArrow) => {
