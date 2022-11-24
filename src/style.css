@@ -245,22 +245,16 @@ main {
   cursor: pointer;
 }
 
-.card-popup__img:hover {
-  /* transform: scale(1.1); */
-}
-
 .card-popup__desc {
   margin-top: 1rem;
   font-size: var(--fs-4);
 }
 
 .pop-up-details {
-  /* margin-top: 1rem; */
   font-size: var(--fs-2);
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
-  font-style: italic;
   gap: 1.5rem;
 }
 
@@ -307,6 +301,8 @@ main {
   align-items: center;
   gap: var(--fs-2);
   padding: var(--fs-2);
+  box-shadow: 5px 10px 10px #111;
+  background-color: #fff;
 }
 
 .add-comment-title {
