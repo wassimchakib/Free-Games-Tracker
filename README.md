@@ -62,7 +62,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://wassimchakib.github.io/Free-Games-Tracker/dist/)
+- [Live Demo Link](https://wassimchakib.github.io/Free-Games-Tracker)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
