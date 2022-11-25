@@ -9,13 +9,15 @@
     - [Tech Stack](#tech-stack)
     - [Key Features](#key-features)
   - [🚀 Live Demo](#live-demo)
+  - [🚀 Kanban Link](#kanban-link)
 - [💻 Getting Started](#getting-started)
   - [Setup](#setup)
   - [Prerequisites](#prerequisites)
   - [Install](#install)
   - [Usage](#usage)
   - [Run tests](#run-tests)
-  - [Deployment](#triangular_flag_on_post-deployment)
+  - [Deployment](#deployment)
+  - [Pull Requests](#pull-requests)
 - [👥 Authors](#authors)
 - [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
@@ -64,6 +66,10 @@
 
 - [Live Demo Link](https://wassimchakib.github.io/Free-Games-Tracker)
 
+## 🚀 Kanban Link <a name="kanban-link"></a>
+
+- [Kanban Link](https://github.com/wassimchakib/Free-Games-Tracker/projects/1)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
@@ -109,6 +115,12 @@ To run tests, run the following command:
 You can deploy this project using: 
 
 `npm run deploy`
+
+### Pull requests
+
+- [Pull request - Wassim](https://github.com/wassimchakib/Free-Games-Tracker/pull/23)
+- [Pull request - Mancoba](https://github.com/wassimchakib/Free-Games-Tracker/pull/37)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
