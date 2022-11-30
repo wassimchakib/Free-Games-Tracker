@@ -6,7 +6,7 @@ import countItems from './itemCounter.js';
 import minimizeText, { checkInput } from './utilities.js';
 
 let previous = 0;
-let next = 3;
+let next = 6;
 let totalItems = 0;
 
 const generateAPI = async (previous = 0, next = -1) => {
@@ -55,12 +55,6 @@ const renderHomePage = async (previous, next) => {
   const cards = document.querySelector('.cards');
   const listOfCards = await generateListOfGames(previous, next);
   cards.innerHTML = listOfCards.join('');
-
-  // Showing the number of items in Navbar
-
-  const navGame = document.querySelector('.nav-games');
-  const numberOfDisplayedGames = countItems(cards);
-  navGame.textContent = `Games (${numberOfDisplayedGames})`;
 
   // Render comments
   // eslint-disable-next-line no-use-before-define
@@ -202,13 +196,13 @@ const btnsEventListener = () => {
   // Event Listener on Arrow buttons
   rightArrow.addEventListener('click', () => {
     previous = next;
-    next += 3;
+    next += 6;
     updateDOM(previous, next);
   });
   // Event Listener on Arrow buttons
   leftArrow.addEventListener('click', () => {
     next = previous;
-    previous -= 3;
+    previous -= 6;
     updateDOM(previous, next);
   });
 };
